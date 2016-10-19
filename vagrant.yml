@@ -1,0 +1,8 @@
+# Custom Vagrant Settings
+#
+# This file allows to override Default Vagrant settings.
+#
+vagrant-name : t8-qa.xkit.co
+network:
+  ip: 192.168.23.25
+  hostname: t8-qa.xkit.co

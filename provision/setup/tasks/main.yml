@@ -1,0 +1,54 @@
+- name: Prepare | Ubuntu Update apt-get
+  apt: update_cache=yes cache_valid_time=3600
+  when: ansible_os_family == "Debian"
+
+- name: Prepare | Ubuntu Update apt-get | Check Cache
+  stat: path=/var/cache/apt
+  register: apt_cache_stat
+  when: ansible_os_family == "Debian"
+
+- name: Install Nginx on Ubuntu
+  apt: pkg={{ item }} state=installed
+  with_items:
+      - nginx
+      - curl
+  when: ansible_os_family == "Debian"
+
+- name: Ensure the Nginx conf.d Directory exists.
+  file:
+    dest: "/etc/nginx/conf.d"
+    mode: 0755
+    owner: root
+    state: directory
+
+- name: Deploy Nginx Configuration
+  copy:
+    src: "files/b2b.conf"
+    dest: "/etc/nginx/conf.d"
+    mode: 0755
+    owner: root
+
+- name: Ensure the Certificate directory exists.
+  file:
+    dest: "/etc/ssl/certs"
+    mode: 0755
+    owner: root
+    state: directory
+
+- name: Deploy SSL Certificate
+  copy:
+    src: "files/xkit.co.crt"
+    dest: "/etc/ssl/certs"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Deploy SSL Key
+  copy:
+    src: "files/xkit.co.key"
+    dest: "/etc/ssl/certs"
+    owner: root
+    group: root
+    mode: 0600
+
+
