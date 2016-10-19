@@ -1,0 +1,29 @@
+---
+
+- name: Check if nginx is installed
+  command: bash -lc "nginx -v"
+  become: true
+  register: nginx_status
+  ignore_errors: true
+
+- name: Add Nginx repository.
+  copy: src="roles/nginx/files/nginx.repo" dest="/etc/yum.repos.d/nginx.repo"
+  become: true
+
+#- name: Unistall nginx
+#  yum: name=nginx state=absent update_cache=true
+#  become: true
+#   when: nginx_status|failed
+
+- name: Install nginx
+  yum: name=nginx state=installed update_cache=true
+  become: true
+  when: nginx_status|failed
+
+- name: Create folders
+  file: path=/etc/nginx/{{ item }} state=directory
+  with_items:
+    - sites-enabled
+    - sites-available
+  become: true 
+  when: nginx_status|failed

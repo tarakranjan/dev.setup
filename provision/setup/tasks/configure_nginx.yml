@@ -1,0 +1,16 @@
+---
+
+- name: Delete default.conf
+  file: path=/etc/nginx/{{ item }}/default state=absent
+  with_items:
+    - sites-enabled
+    - sites-available
+  become: true 
+
+- name: Copy nginx.conf
+  template: src=nginx.conf dest=/etc/nginx/
+  become: true
+  
+- name: Restart nginx
+  service: name=nginx state=restarted
+  become: true
