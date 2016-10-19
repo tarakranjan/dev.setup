@@ -57,7 +57,42 @@ To Upgrade Ansible later
 
 ```
 
+Check Ansible Installation
+```sh
 
+    ansible -i inventory -m ping all
+    ansible -i inventory -m setup all
+
+```
+
+
+To Install Java, Maven, Node, NPM etc
+```sh
+
+    ansible-playbook mac.setup.playbook.yml -i inventory 
+
+```
+
+##### Workspace Setup
+
+```sh
+cd  /Users/$USER
+mkdir -p Workspace/B2B 
+cd Workspace/B2B
+```
+
+##### Cloning From  Git Repo
+```sh
+git clone git@git.learn.cisco:b2b/knowledgecenter.git
+git clone https://github.com/rajasoun/dev.setup.git
+```
+
+##### Start the Vagrant
+```sh
+export KC_DIR=/Users/$USER/Workspace/B2B/knowledgecenter
+echo "export KC_DIR=/Users/$USER/Workspace/B2B/knowledgecenter" >> ~/.bashrc
+vagrant up
+```
 
 
 ## Reference Shortcuts 
