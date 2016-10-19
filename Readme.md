@@ -99,7 +99,7 @@ vagrant up
 ```sh
 
     mkdir -p provision/{setup,deploy}/{defaults,files,handlers,meta,tasks,templates,vars}
-    ansible-vault encrypt provision/setup/files/*
+    ansible-vault encrypt provision/setup/files/* --vault-password-file ./.vault_pass
     ansible-vault decrypt provision/setup/files/* --vault-password-file ./.vault_pass
 
 ```

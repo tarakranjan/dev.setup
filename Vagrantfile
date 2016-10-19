@@ -39,12 +39,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.hostsupdater.aliases = [$hostname]
 
   config.vm.synced_folder "#{ENV['KC_DIR']}/kc-web/src/main/webapp",
-                                    "/usr/share/nginx/knowledgecenter"
+                                    "/usr/share/nginx/knowledgecenter",
+                                    owner: "root",
+                                    group: "root"
 
 
   ## Create Control Center as a Vagrant Box
   config.vm.provision "ansible" do |ansible|
      ansible.verbose = "v"
      ansible.playbook       = "provision/vagrant.yml"
+     ansible.raw_arguments  = "--user=vagrant"
+     ansible.raw_arguments  = "--vault-password-file=./.vault_pass"
   end
 end
