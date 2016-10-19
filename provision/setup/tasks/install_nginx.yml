@@ -1,10 +1,5 @@
 ---
 
-- name: Check if nginx is installed
-  command: bash -lc "nginx -v"
-  become: true
-  register: nginx_status
-  ignore_errors: true
 
 - name: Prepare | Ubuntu Update apt-get
   apt: update_cache=yes cache_valid_time=3600
@@ -15,6 +10,12 @@
   register: apt_cache_stat
   when: ansible_os_family == "Debian"
 
+- name: Check if nginx is installed
+  command: bash -lc "nginx -v"
+  become: true
+  register: nginx_status
+  ignore_errors: true
+
 - name: Install Nginx on Ubuntu
   apt: pkg={{ item }} state=installed
   with_items:
@@ -22,10 +23,3 @@
       - curl
   when: ansible_os_family == "Debian"
 
-- name: Create folders
-  file: path=/etc/nginx/{{ item }} state=directory
-  with_items:
-    - sites-enabled
-    - sites-available
-  become: true
-  when: nginx_status|failed
