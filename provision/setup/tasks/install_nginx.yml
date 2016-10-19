@@ -6,24 +6,26 @@
   register: nginx_status
   ignore_errors: true
 
-- name: Add Nginx repository.
-  copy: src="roles/nginx/files/nginx.repo" dest="/etc/yum.repos.d/nginx.repo"
-  become: true
+- name: Prepare | Ubuntu Update apt-get
+  apt: update_cache=yes cache_valid_time=3600
+  when: ansible_os_family == "Debian"
 
-#- name: Unistall nginx
-#  yum: name=nginx state=absent update_cache=true
-#  become: true
-#   when: nginx_status|failed
+- name: Prepare | Ubuntu Update apt-get | Check Cache
+  stat: path=/var/cache/apt
+  register: apt_cache_stat
+  when: ansible_os_family == "Debian"
 
-- name: Install nginx
-  yum: name=nginx state=installed update_cache=true
-  become: true
-  when: nginx_status|failed
+- name: Install Nginx on Ubuntu
+  apt: pkg={{ item }} state=installed
+  with_items:
+      - nginx
+      - curl
+  when: ansible_os_family == "Debian"
 
 - name: Create folders
   file: path=/etc/nginx/{{ item }} state=directory
   with_items:
     - sites-enabled
     - sites-available
-  become: true 
+  become: true
   when: nginx_status|failed

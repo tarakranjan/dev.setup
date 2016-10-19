@@ -5,12 +5,50 @@
   with_items:
     - sites-enabled
     - sites-available
-  become: true 
+  become: true
 
 - name: Copy nginx.conf
-  template: src=nginx.conf dest=/etc/nginx/
+  template: src=files/nginx.conf dest=/etc/nginx/
   become: true
-  
+
+
+- name: Ensure the Nginx conf.d Directory exists.
+  file:
+    dest: "/etc/nginx/conf.d"
+    mode: 0755
+    owner: root
+    state: directory
+
+- name: Deploy Nginx Configuration
+  copy:
+    src: "files/b2b.conf"
+    dest: "/etc/nginx/conf.d"
+    mode: 0755
+    owner: root
+
+- name: Ensure the Certificate directory exists.
+  file:
+    dest: "/etc/ssl/certs"
+    mode: 0755
+    owner: root
+    state: directory
+
+- name: Deploy SSL Certificate
+  copy:
+    src: "files/xkit.co.crt"
+    dest: "/etc/ssl/certs"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Deploy SSL Key
+  copy:
+    src: "files/xkit.co.key"
+    dest: "/etc/ssl/certs"
+    owner: root
+    group: root
+    mode: 0600
+
 - name: Restart nginx
   service: name=nginx state=restarted
   become: true
