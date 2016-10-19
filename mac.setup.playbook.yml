@@ -3,7 +3,7 @@
 - hosts: localhost
 
   vars:
-    utils:
+    dev_tools:
 #      - docker
 #      - git
 #      - node
@@ -21,7 +21,7 @@
 
     - name: Install libraries/utils with homebrew
       homebrew: name={{ item }} state=present
-      with_items: utils
+      with_items: dev_tools
 
     - name: Cleanup after brewing
       shell: brew cleanup
