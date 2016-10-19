@@ -1,6 +1,7 @@
 .DS_Store
 .idea/workspace.xml
 *.retry
+.vault_pass
 .vagrant/
 .idea/
 
