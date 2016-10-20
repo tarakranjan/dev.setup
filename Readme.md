@@ -12,16 +12,16 @@ Install the following software on Host Machine
 
 |  S.No |  Software         | Version        |  
 |-------|-------------------|----------------|
-|   1   |  [ansible]        |   |
+|   1   |  [ansible]        | 2.1.2.0        |
 |   2   |  [Virtual Box]    | 5.1.6 r110634  | 
-|   3   |  [Vagrant]        |   | 
-|   4   |  [JDK]            |   | 
-|   5   |  [Maven]          |   | 
-|   6   |  [Git CLI Client] |   |  
-|   7   |  [NVM]            |   |    
-|   8   |  [Node.js]        |   | 
+|   3   |  [Vagrant]        | 1.8.6          | 
+|   4   |  [JDK]            | 1.8.0_60       | 
+|   5   |  [Maven]          | 3.3.9          | 
+|   6   |  [Git CLI Client] | 2.10.1         |  
+|   7   |  [NVM]            | 0.26.1         |    
+|   8   |  [Node.js]        | v5.5.0         | 
 
-
+* Last Updated: 19th Oct 2016 
 
  
 ## Ansible Installation
@@ -115,7 +115,6 @@ vagrant up
 [Node.js]: https://nodejs.org/en/
 [ansible]: http://docs.ansible.com/ansible/intro_installation.html#latest-releases-via-pip
  
-* Last Updated: 19th Oct 2016 
  
  
  
