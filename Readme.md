@@ -1,7 +1,7 @@
 # About
 ---
  
- Toolkit to setup  Devleoper Box  for Single Page Application
+ Toolkit to setup  Developer Box  for Single Page Application
  
  Single-Page Applications (SPAs) are Web apps that load a single HTML page and dynamically update that page as the user interacts with the app.
 

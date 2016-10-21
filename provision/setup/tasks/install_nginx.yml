@@ -1,25 +1,15 @@
 ---
 
 
-- name: Prepare | Ubuntu Update apt-get
-  apt: update_cache=yes cache_valid_time=3600
-  when: ansible_os_family == "Debian"
-
-- name: Prepare | Ubuntu Update apt-get | Check Cache
-  stat: path=/var/cache/apt
-  register: apt_cache_stat
-  when: ansible_os_family == "Debian"
-
-- name: Check if nginx is installed
-  command: bash -lc "nginx -v"
+- name: Install Nginx
+  when: ansible_os_family == 'Debian'
   become: true
-  register: nginx_status
-  ignore_errors: true
-
-- name: Install Nginx on Ubuntu
-  apt: pkg={{ item }} state=installed
-  with_items:
-      - nginx
-      - curl
-  when: ansible_os_family == "Debian"
-
+  apt:
+    name: nginx
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
+  tags:
+    - nginx
+    - frontend
+    - deps

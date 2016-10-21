@@ -11,10 +11,12 @@
 
 # Bugs
 ---
-1. Login not working with 403 Error
+1. Nginx Version Not Compatible
+2. Login not working with 403 Error
     * Check Nginx Version. 
     * Calls to /knowledgecenter/configurations not definied in b2b.conf
 
-2. Certificate Issue 
-3. Not working in Chrome 
+3. Certificate Issue 
+4. Not working in Chrome 
+
 

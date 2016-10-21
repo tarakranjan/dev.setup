@@ -1,0 +1,43 @@
+---
+
+# Targeting specific OSes or distributions:
+#
+#   - `ansible_system`               → Linux, BSD, ...
+#   - `ansible_os_family`            → Debian, RedHat, ...
+#   - `ansible_distribution`         → Debian, Ubuntu, RedHat, ...
+#   - `ansible_distribution_release` → precise, wheezy, ...
+#   - `ansible_pkg_mgr`              → apt, yum, ...
+#   - `ansible_architecture`         → x86_64, x86_32, ...
+
+
+# Debian
+# ------
+
+
+- name: Prepare | Ubuntu Update apt-get
+  apt: update_cache=yes cache_valid_time=3600
+  when: ansible_os_family == "Debian"
+
+- name: Prepare | Ubuntu Update apt-get | Check Cache
+  stat: path=/var/cache/apt
+  register: apt_cache_stat
+  when: ansible_os_family == "Debian"
+
+- name: Adding APT repository key
+  when: ansible_os_family == 'Debian'
+  become: true
+  apt_key:
+    url: "http://nginx.org/keys/nginx_signing.key"
+
+- name: Add official APT repository
+  when: ansible_os_family == 'Debian'
+  become: true
+  apt_repository:
+    repo: "deb http://nginx.org/packages/{{ansible_distribution|lower}}/ {{ansible_distribution_release}} nginx"
+
+- name: Prerequisites for Provisioning Utilities
+  when: ansible_os_family == 'Debian'
+  become: true
+  apt: pkg={{ item }} state=installed
+  with_items:
+      - curl
